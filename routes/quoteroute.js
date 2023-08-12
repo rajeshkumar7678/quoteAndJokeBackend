@@ -42,7 +42,7 @@ genquote.get('/quote', async (req, res) => {
     }
 });
 
-genquote.get('/quote', async (req, res) => {
+genquote.get('/joke', async (req, res) => {
   try {
       let {prompt}=req.query
       const openAi = new OpenAIApi(
@@ -56,7 +56,7 @@ genquote.get('/quote', async (req, res) => {
           messages: [
               {
                 "role": "user",
-                "content": `joke for ${prompt}`
+                "content": `joke for ${prompt}and it should be min 2 line`
               }
               
             ],
@@ -70,7 +70,7 @@ genquote.get('/quote', async (req, res) => {
       const reply = response.data.choices[0].message.content.trim()
       res.send({"quote":reply})
   } catch (error) {
-    console.error('Error fetching quote:', error.message);
+    console.error('Error fetching quote:', error);
     res.status(500).json({ error: 'Failed to fetch quote.' });
   }
 });
